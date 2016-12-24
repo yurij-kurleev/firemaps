@@ -20,7 +20,7 @@ let homeController = ($scope, home) => {
     };
 
     $scope.getAllObjects = () => {
-
+        //dsfsdfsd
     };
 
     $scope.$on('$viewContentLoaded', () => {
