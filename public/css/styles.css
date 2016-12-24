@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    margin: 0;
+    background-color: #EDF0F1;
+    font-size: 16px;
+}
+
+body{
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.container{
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1 100%;
+    justify-content: center;
+}
+
+#mapid{
+    display: flex;
+    flex: 3 70%;
+    height: 690px;
+}
+
+.objects-block{
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1 30%;
+    align-content: flex-start;
+    align-self: flex-start;
+    height: 690px;
+    overflow: scroll;
+}
+
+.object{
+    border-bottom: 1px solid #000;
+    flex: 1 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    background-color: #fff;
+    font-size: 1.25rem;
+    transition: all 0.3s;
+}
+
+.object:hover{
+    background-color: #ec7334;
+    cursor: pointer;
+    color: #fff;
+}
+
+.speed-info{
+    flex: 1 100%;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.footer{
+    background-color: #262B3A;
+    display: flex;
+    flex: 1 100%;
+    flex-flow: row wrap;
+    align-self: stretch;
+}
+
+.footer-top{
+    flex: 1 100%;
+    color: #ec7334;
+    font-size: 3rem;
+    margin-left: 2%;
+}
+
+.footer-bottom{
+    flex: 1 100%;
+    color: #ec7334;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.footer-line{
+    border: none; /* Убираем границу для браузера Firefox */
+    color: #515151; /* Цвет линии для остальных браузеров */
+    background-color: #515151; /* Цвет линии для браузера Firefox и Opera */
+    height: 1px; /* Толщина линии */
+}
