@@ -44,6 +44,7 @@ body{
     padding-bottom: 5px;
     padding-left: 25px;
     background-color: #fff;
+    align-self: flex-start;
     font-size: 1.25rem;
     transition: all 0.3s;
 }

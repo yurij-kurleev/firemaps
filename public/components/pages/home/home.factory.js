@@ -1,34 +1,19 @@
 'use strict';
 
-let home = ($http, $cookies) => {
-    let getAllObjects = () => {
-        $http({
+let home = ($http) => {
+    let updateUserCoords = (position, user) => {
+        return $http({
             method: 'GET',
-            url: 'release.fire-group.com/api/getList?auth=' + $cookies.get('apiKey')
-        }).success((response)=>{
-            response = "success";
-            return response;
-        }).error((response)=>{
-            response = "error";
-            return response;
-        })
-    };
-
-    let getOneObject = (imei) => {
-        $http({
-            method: 'GET',
-            url: 'release.fire-group.com/api/getState?auth=' + $cookies.get('apiKey') + '&imei=' + imei
-        })
+            url: ''
+        });
     };
 
     return {
-        getAllObjects,
-        getOneObject
+        updateUserCoords
     };
 };
 
 home.$inject = [
-    '$http',
-    '$cookies'
+    '$http'
 ];
 angular.module('app').factory('home', home);

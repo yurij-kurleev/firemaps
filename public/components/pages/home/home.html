@@ -1,20 +1,15 @@
 <div class="container">
-    <header class="header">
-
-    </header>
     <div class="objects-block">
-        <div class="object" ng-click="addMarker(46.47, 30.7)"
-             ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
-            Object #{{i}}
+        <div class="object" ng-click="addMarker(object.latitude, object.longitude)"
+             ng-repeat="object in objectsList track by $index">
+            {{object.name}}
             <div class="speed-info">
                 <img src="https://maxcdn.icons8.com/windows8/PNG/26/Sports/running-26.png"
                      title="Running" width="20" class="speed-ico">
-                25 km/h
+                {{object.speed + " km/h"}}
             </div>
         </div>
     </div>
     <div id="mapid"></div>
     <div class="footer" ng-include="'components/partials/footer.html'"></div>
 </div>
-<!--<button ng-click="addMarker(46.47, 30.7)"> + </button>
-<button ng-click="clearMap()"> - </button>-->
