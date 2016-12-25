@@ -5,7 +5,7 @@ let homeController = ($scope, $cookies, home, $rootScope, $q) => {
     $scope.objectsList = [
         {name:"Object #1", speed: 25, latitude: 46.45, longitude: 30.72},
         {name:"Object #2", speed: 5, latitude: 46.46, longitude: 30.73}
-        ];
+        ];//
     $scope.error = "";
     $scope.user = $cookies.getObject('user');
     $scope.location = {};
