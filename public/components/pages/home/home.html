@@ -1,6 +1,6 @@
 <div class="container">
     <div class="objects-block">
-        <div class="object" ng-click="addMarker(object.latitude, object.longitude)"
+        <div class="object" ng-click="showMarker(object.latitude, object.longitude, object.name)"
              ng-repeat="object in objectsList track by $index">
             {{object.name}}
             <div class="speed-info">

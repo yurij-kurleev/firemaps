@@ -9,6 +9,10 @@ let routesConfig = ($routeProvider) => {
 			templateUrl: 'components/pages/home/home.html',
 			controller: 'homeController'
 		})
+		.when('/authorize', {
+			templateUrl: 'components/pages/authorize/authorize.html',
+			controller: 'authorizeController'
+		})
 		.otherwise({
 			redirectTo: '/home'
 		});

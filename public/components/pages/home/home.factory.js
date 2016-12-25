@@ -3,8 +3,12 @@
 let home = ($http) => {
     let updateUserCoords = (position, user) => {
         return $http({
-            method: 'GET',
-            url: ''
+            method: 'POST',
+            url: '/users',
+            headers: {
+                'Authorization': 'Basic ' + user.login + ':' + user.password
+            },
+            data: data
         });
     };
 

@@ -1,11 +1,8 @@
 'use strict';
 
-let homeController = ($scope, $cookies, home, $rootScope, $q) => {
+let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
     $scope.markersList = [];
-    $scope.objectsList = [
-        {name:"Object #1", speed: 25, latitude: 46.45, longitude: 30.72},
-        {name:"Object #2", speed: 5, latitude: 46.46, longitude: 30.73}
-        ];
+    $scope.objectsList = [];
     $scope.error = "";
     $scope.user = $cookies.getObject('user');
     $scope.location = {};
@@ -26,17 +23,53 @@ let homeController = ($scope, $cookies, home, $rootScope, $q) => {
             }).addTo($scope.mymap);
     };
 
-    //Добавить маркер из списка на карту
-    $scope.addMarker = (latitude, longitude, title = "It's me!") => {
+    //Добавить маркер на карту
+    $scope.addMarker = (latitude, longitude, title="Object #" + $scope.markersList.length) => {
         if(!latitude || !longitude){
             console.log("No such object on map");
             return;
         }
-        let marker = L.marker([latitude, longitude]).addTo($scope.mymap);
-        $scope.markersList.push(marker);
-        $scope.markersList[$scope.markersList.length - 1]
-            .bindPopup(title).openPopup();
+        if(!$scope.markersList[title]){
+            $scope.markersList[title] = L.marker([latitude, longitude]).addTo($scope.mymap);
+            $scope.markersList[title]
+                .bindPopup(title);
+        }
+        return $scope.markersList[title];
+    };
+
+    //Показать маркер из списка на карте
+    $scope.showMarker = (latitude, longitude, title) => {
+        let marker = $scope.addMarker(latitude, longitude, title);
+        marker.openPopup();
         $scope.mymap.panTo([latitude, longitude]);
+    };
+
+    //Показать маркер пользователя карте
+    $scope.showUserMarker = (position) => {
+        L.MakiMarkers.accessToken = 'pk.eyJ1IjoiZXZpbGNvcnAiLCJhIjoiY2l4MXVrZ2dtMDAwdDJ0bzNl' +
+            'OHZiM3g2dSJ9.ZB-O9y9ORAuQ9AU9KcgkGQ';
+        let icon = L.MakiMarkers.icon({icon: "marker", color: "#b0b", size: "l"});
+        let marker = L.marker([position.latitude, position.longitude],
+            {icon: icon}).addTo($scope.mymap);
+        marker.bindPopup("It's you!");
+        return marker;
+    };
+
+    //Обновить местоположение маркеров
+    $scope.refreshMarkers = () => {
+        let tmpMarkersList = $scope.markersList;
+        if(!tmpMarkersList){
+            return;
+        }
+        $scope.markersList = [];
+        for(let i in tmpMarkersList){//Object #1
+            for(let j in $scope.objectsList){//0
+                if(i == $scope.objectsList[j].name){
+                    $scope.addMarker($scope.objectsList[j].latitude, $scope.objectsList[j].longitude, i);
+                    break;
+                }
+            }
+        }
     };
 
     $scope.getLocation = () => {
@@ -55,49 +88,43 @@ let homeController = ($scope, $cookies, home, $rootScope, $q) => {
         return deferred.promise;
     };
 
-    $scope.setUserMarker = (position) => {
-        L.MakiMarkers.accessToken = 'pk.eyJ1IjoiZXZpbGNvcnAiLCJhIjoiY2l4MXVrZ2dtMDAwdDJ0bzNl' +
-            'OHZiM3g2dSJ9.ZB-O9y9ORAuQ9AU9KcgkGQ';
-        let icon = L.MakiMarkers.icon({icon: "marker", color: "#b0b", size: "l"});
-        let marker = L.marker([position.latitude, position.longitude],
-            {icon: icon}).addTo($scope.mymap);
-        marker.bindPopup("It's you!");
-        return marker;
-    };
-
     $scope.$on('$viewContentLoaded', () => {
-        $scope.getLocation().then((position)=>{
-            /*home.updateUserCoords(position.coords, $scope.user)
-                .success((response) => {
-                    $scope.objectsList = response;
-                })
-                .error((error) => {
-                    $scope.error = error;
-                });*/
+        if(!$scope.user){
+            $window.location.href = "#/authorize";
+        } else {
+            $scope.getLocation().then((position)=>{
+                home.updateUserCoords(position.coords, $scope.user)
+                    .success((response) => {
+                        $scope.objectsList = response;
+                    })
+                    .error((error) => {
+                        $scope.error = error;
+                    });
+                $scope.showUserMarker(position.coords).openPopup();
+                $scope.mymap.panTo([position.coords.latitude, position.coords.longitude]);
+            });
             $scope.initMap();
-            $scope.setUserMarker(position.coords).openPopup();
-            $scope.mymap.panTo([position.coords.latitude, position.coords.longitude]);
-        });
+        }
     });
 
     //Отправка новых координат и обновление объектов
     setInterval(()=>{
         $scope.$apply(()=>{
             $scope.getLocation().then((position)=>{
-                /*home.updateUserCoords(position.coords, $scope.user)
+                home.updateUserCoords(position.coords, $scope.user)
                     .success((response) => {
                         $scope.objectsList = response;
                     })
                     .error((error) => {
                         $scope.error = error;
-                    });*/
-                $scope.clearMap($scope.setUserMarker(position.coords));
+                    });
+                $scope.clearMap($scope.showUserMarker(position.coords));
+                $scope.refreshMarkers();
             });
         });
     }, 10000);
 
     $scope.clearMap = (userMarker) => {
-        console.log($scope.markersList);
         for(let i in $scope.markersList){
             $scope.mymap.removeLayer($scope.markersList[i]);
         }
@@ -111,7 +138,8 @@ homeController.$inject = [
     '$cookies',
     'home',
     '$rootScope',
-    '$q'
+    '$q',
+    '$window'
 ];
 
 angular.module('app').controller('homeController', homeController);
