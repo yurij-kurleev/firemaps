@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container1">
     <div class="objects-block">
-        <div class="object" ng-click="showMarker(object.latitude, object.longitude, object.name)"
-             ng-repeat="object in objectsList track by $index">
-            {{object.name}}
+        <div class="object" ng-click="showMarker(object.latitude, object.longitude, object.login)"
+             ng-repeat="object in objectsList">
+            {{object.login}}
             <div class="speed-info">
                 <img src="https://maxcdn.icons8.com/windows8/PNG/26/Sports/running-26.png"
                      title="Running" width="20" class="speed-ico">

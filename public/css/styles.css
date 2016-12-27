@@ -14,7 +14,7 @@ body{
     flex-flow: column wrap;
 }
 
-.container{
+.container1{
     display: flex;
     flex-flow: row wrap;
     flex: 1 100%;
@@ -89,4 +89,61 @@ body{
     color: #515151; /* Цвет линии для остальных браузеров */
     background-color: #515151; /* Цвет линии для браузера Firefox и Opera */
     height: 1px; /* Толщина линии */
+}
+
+.authorization-form{
+    display: flex;
+    justify-content: flex-start;
+    flex: 1 20%;
+    flex-flow: row wrap;
+    margin: 10% 30%;
+}
+
+.input-field{
+    flex: 1 100%;
+    margin-bottom: 20px;
+}
+
+.input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+    color: #000;
+    font-size: 1.5rem;
+}
+
+.input-field input[type=text]:focus, .input-field input[type=password]:focus{
+    border-bottom: 1px solid #ec7334;
+    box-shadow: 0 1px 0 0 #ec7334;
+    font-size: 1.5rem;
+}
+
+.authorization-form-submit{
+    flex: 1 100%;
+    background-color: #25d236;
+    border: none;
+    border-radius: 10px;
+    margin: 25px 15% 25px 15%;
+    font-size: 1.6rem;
+    color: #515151;
+    transition: all 0.3s;
+}
+
+.authorization-form-submit:hover{
+    background-color: #1c621d;
+    color: #fff;
+}
+
+.h2-header{
+    flex: 1 100%;
+    text-align: center;
+}
+
+.error{
+    background: rgba(200, 40, 0, 0.8);
+    color: #ffffff;
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 2%;
+    padding: 10px 2%;
+    font-size: 1.1rem;
+    border-radius: 15px;
 }

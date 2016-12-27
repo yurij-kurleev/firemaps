@@ -44,7 +44,7 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
         $scope.mymap.panTo([latitude, longitude]);
     };
 
-    //Показать маркер пользователя карте
+    //Показать маркер пользователя на карте
     $scope.showUserMarker = (position) => {
         L.MakiMarkers.accessToken = 'pk.eyJ1IjoiZXZpbGNvcnAiLCJhIjoiY2l4MXVrZ2dtMDAwdDJ0bzNl' +
             'OHZiM3g2dSJ9.ZB-O9y9ORAuQ9AU9KcgkGQ';
@@ -64,7 +64,7 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
         $scope.markersList = [];
         for(let i in tmpMarkersList){//Object #1
             for(let j in $scope.objectsList){//0
-                if(i == $scope.objectsList[j].name){
+                if(i == $scope.objectsList[j].login){
                     $scope.addMarker($scope.objectsList[j].latitude, $scope.objectsList[j].longitude, i);
                     break;
                 }
@@ -114,12 +114,12 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
                 home.updateUserCoords(position.coords, $scope.user)
                     .success((response) => {
                         $scope.objectsList = response;
+                        $scope.clearMap($scope.showUserMarker(position.coords));
+                        $scope.refreshMarkers();
                     })
                     .error((error) => {
                         $scope.error = error;
                     });
-                $scope.clearMap($scope.showUserMarker(position.coords));
-                $scope.refreshMarkers();
             });
         });
     }, 10000);
