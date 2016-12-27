@@ -93,7 +93,11 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
             $window.location.href = "#/authorize";
         } else {
             $scope.getLocation().then((position)=>{
-                home.updateUserCoords(position.coords, $scope.user)
+                let pos = {
+                    latitude: position.latitude,
+                    longitude: position.longitude
+                };
+                home.updateUserCoords(pos, $scope.user)
                     .success((response) => {
                         $scope.objectsList = response;
                     })
@@ -111,7 +115,11 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
     setInterval(()=>{
         $scope.$apply(()=>{
             $scope.getLocation().then((position)=>{
-                home.updateUserCoords(position.coords, $scope.user)
+                let pos = {
+                    latitude: position.latitude,
+                    longitude: position.longitude
+                };
+                home.updateUserCoords(pos, $scope.user)
                     .success((response) => {
                         $scope.objectsList = response;
                         $scope.clearMap($scope.showUserMarker(position.coords));
