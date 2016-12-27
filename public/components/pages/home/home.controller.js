@@ -94,8 +94,8 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
         } else {
             $scope.getLocation().then((position)=>{
                 let pos = {
-                    latitude: position.latitude,
-                    longitude: position.longitude
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
                 };
                 home.updateUserCoords(pos, $scope.user)
                     .success((response) => {
@@ -116,8 +116,8 @@ let homeController = ($scope, $cookies, home, $rootScope, $q, $window) => {
         $scope.$apply(()=>{
             $scope.getLocation().then((position)=>{
                 let pos = {
-                    latitude: position.latitude,
-                    longitude: position.longitude
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
                 };
                 home.updateUserCoords(pos, $scope.user)
                     .success((response) => {
