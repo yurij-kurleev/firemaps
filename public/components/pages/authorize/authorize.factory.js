@@ -4,7 +4,7 @@ let auth = ($cookies, $http) => {
     let authorize =  (data) => {
         return $http({
             method: 'GET',
-            url: '/index.php',
+            url: '/users/login',
             headers: {
                 'Authorization': 'Basic ' + data.login + ':' + data.password
             }

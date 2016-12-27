@@ -2,11 +2,11 @@
 <h2 class="h2-header blue-grey-text text-lighten-1">Авторизация</h2>
 <form ng-submit="authorize()" class="authorization-form">
     <div class="input-field amber-text text-darken-4">
-        <input id="login" type="text" class="validate" required>
+        <input id="login" type="text" class="validate" ng-model="formData.login" required>
         <label for="login">Логин:</label>
     </div>
     <div class="input-field amber-text text-darken-4">
-        <input id="password" type="password" class="validate" required>
+        <input id="password" type="password" class="validate" ng-model="formData.password" required>
         <label for="password">Пароль:</label>
     </div>
     <button class="authorization-form-submit" type="submit">Войти</button>
