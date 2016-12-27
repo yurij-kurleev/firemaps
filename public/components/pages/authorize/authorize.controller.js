@@ -8,6 +8,7 @@ let authorizeController = ($scope, auth, $cookies, $window) => {
     $scope.authorize = () => {
         auth.authorize($scope.formData).success((response)=>{
             $scope.user = response;
+            $scope.user.password = $scope.formData.password;
             $cookies.putObject('user', $scope.user);
             $window.location.href = "#/home";
         })
